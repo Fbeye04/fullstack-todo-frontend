@@ -13,6 +13,7 @@
     --color-primer-border: #0d8200;
     --color-secondary-button: #ff0000;
     --color-secondary-border: #8d0202;
+    --color-side-text: #656565;
   }
 
   :root[data-theme="dark"] {
@@ -32,4 +33,25 @@ body {
   font-family: "Josefin Sans", sans-serif;
   background-color: var(--color-main-background);
   transition: background-color 0.3s ease-in-out;
+  min-height: 100vh;
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-main-background); /* Putih */
+    background-image: 
+    /* Garis sekunder (lebih tipis) */ linear-gradient(
+        #e5e7eb 0.5px,
+        transparent 0.5px
+      ),
+      linear-gradient(to right, #e5e7eb 0.5px, transparent 0.5px),
+      /* Garis utama (lebih tebal) */
+        linear-gradient(#d1d5db 1px, transparent 1px),
+      linear-gradient(to right, #d1d5db 1px, transparent 1px);
+    background-size: 20px 20px, /* Ukuran grid sekunder */ 20px 20px,
+      100px 100px, /* Ukuran grid utama */ 100px 100px;
+  }
 }

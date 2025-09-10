@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        "main-background": "var(--color-background)",
+        "main-background": "var(--color-main-background)",
         "blur-background": "var(--color-blur-background)",
         "active-filter": "var(--color-active-filter)",
         "completed-tasks": "var(--color-completed-tasks)",
@@ -14,6 +14,7 @@ export default {
         "primer-border": "var(--color-primer-border)",
         "secondary-button": "var(--color-secondary-button)",
         "secondary-border": "var(--color-secondary-border)",
+        "side-text": "var(--color-side-text)",
       },
     },
   },
