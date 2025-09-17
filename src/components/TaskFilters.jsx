@@ -1,6 +1,6 @@
 export default function TaskFilters({ activeFilter, onFilterChange }) {
   const baseButtonClasses =
-    "flex-1 text-center  border-2  rounded-lg  px-4 pt-1 text-2xl transition-all duration-300 ease-in-out active:scale-95";
+    "flex-1 text-center  border-2  rounded-lg  px-4 pt-1 md:pt-2 md:pb-1 text-2xl md:text-3xl transition-all duration-300 ease-in-out active:scale-95";
   const inactiveButtonClasses = "bg-white border-black hover:bg-gray-200";
   const activeButtonClasses =
     "bg-active-filter text-white shadow border-transparent hover:bg-gray-800";
