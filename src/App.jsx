@@ -4,16 +4,28 @@ import Header from "./components/Header";
 import AddTaskForm from "./components/AddTaskForm";
 import TaskFilters from "./components/TaskFilters";
 import TaskList from "./components/TaskList";
+import EditTaskModal from "./components/EditTaskModal";
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [activeFilter, setActiveFilter] = useState("all");
+  const [editingTask, setEditingTask] = useState(null);
 
   useEffect(() => {
     axios.get("http://localhost:5000/tasks").then((response) => {
       setTasks(response.data);
     });
   }, []);
+
+  useEffect(() => {
+    if (editingTask) {
+      document.body.classList.add("overflow-hidden");
+    }
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [editingTask]);
 
   const handleAddTask = (newTitle) => {
     axios
@@ -66,6 +78,24 @@ function App() {
       });
   };
 
+  const handleOpenEditModal = (taskToEdit) => {
+    setEditingTask(taskToEdit);
+  };
+
+  const handleUpdateTask = (taskId, newTitle) => {
+    axios
+      .put(`http://localhost:5000/tasks/${taskId}`, { title: newTitle })
+      .then((response) => {
+        setTasks((prevTasks) =>
+          prevTasks.map((task) => (task.id === taskId ? response.data : task))
+        );
+        setEditingTask(null);
+      })
+      .catch((error) => {
+        console.error("There was an error updating the task!", error);
+      });
+  };
+
   return (
     <div className='relative container mx-auto lg:bg-main-background lg:flex lg:flex-col lg:w-[800px] py-10 px-8 md:py-12 md:px-10 lg:shadow-xl lg:rounded-lg transition-colors duration-300 ease-in-out z-30'>
       <Header />
@@ -79,8 +109,17 @@ function App() {
           tasks={filteredTasks}
           onDelete={handleDeleteTask}
           onToggle={handleToggleTask}
+          onEdit={handleOpenEditModal}
         />
       </main>
+
+      {editingTask && (
+        <EditTaskModal
+          taskToEdit={editingTask}
+          onClose={() => setEditingTask(null)}
+          onSave={handleUpdateTask}
+        />
+      )}
     </div>
   );
 }
