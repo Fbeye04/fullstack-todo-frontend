@@ -38,9 +38,8 @@ body {
 
 @media (min-width: 1024px) {
   body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    place-items: center;
     background-color: var(--color-main-background); /* Putih */
     background-image: 
     /* Garis sekunder (lebih tipis) */ linear-gradient(

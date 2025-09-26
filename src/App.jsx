@@ -5,11 +5,14 @@ import AddTaskForm from "./components/AddTaskForm";
 import TaskFilters from "./components/TaskFilters";
 import TaskList from "./components/TaskList";
 import EditTaskModal from "./components/EditTaskModal";
+import ConfirmModal from "./components/ConfirmModal";
+import Footer from "./components/Footer";
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [activeFilter, setActiveFilter] = useState("all");
   const [editingTask, setEditingTask] = useState(null);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   useEffect(() => {
     axios.get("http://localhost:5000/tasks").then((response) => {
@@ -41,6 +44,8 @@ function App() {
         console.error("There was an error adding the task!", error);
       });
   };
+
+  const activeTasksCount = tasks.filter((task) => !task.isDone).length;
 
   const filteredTasks = tasks.filter((task) => {
     console.log(activeFilter);
@@ -96,15 +101,32 @@ function App() {
       });
   };
 
+  const handleClearCompleted = () => {
+    axios
+      .delete("http://localhost:5000/tasks/completed")
+      .then(() => {
+        setTasks((prevTasks) => prevTasks.filter((task) => !task.isDone));
+      })
+      .catch((error) => {
+        console.error("There was an error clearing completed tasks!", error);
+      });
+  };
+
+  const handleOpenConfirmModal = () => {
+    setIsConfirmModalOpen(true);
+  };
+
   return (
-    <div className='relative container mx-auto lg:bg-main-background lg:flex lg:flex-col lg:w-[800px] py-10 px-8 md:py-12 md:px-10 lg:shadow-xl lg:rounded-lg transition-colors duration-300 ease-in-out z-30'>
+    <div className='relative flex flex-col min-h-screen lg:min-h-0 lg:h-auto lg:w-full lg:max-w-3xl lg:bg-main-background lg:shadow-xl lg:rounded-lg transition-colors duration-300 ease-in-out z-30'>
       <Header />
-      <main className='mt-14 lg:mt-10'>
+      <main className='mt-14 lg:mt-10 px-8 md:px-16 flex-grow '>
         <AddTaskForm onTaskAdd={handleAddTask} />
-        <TaskFilters
-          activeFilter={activeFilter}
-          onFilterChange={setActiveFilter}
-        />
+        <div className='lg:hidden'>
+          <TaskFilters
+            activeFilter={activeFilter}
+            onFilterChange={setActiveFilter}
+          />
+        </div>
         <TaskList
           tasks={filteredTasks}
           onDelete={handleDeleteTask}
@@ -112,12 +134,28 @@ function App() {
           onEdit={handleOpenEditModal}
         />
       </main>
+      <Footer
+        itemsLeft={activeTasksCount}
+        onOpenConfirmModal={handleOpenConfirmModal}
+        activeFilter={activeFilter}
+        onFilterChange={setActiveFilter}
+      />
 
       {editingTask && (
         <EditTaskModal
           taskToEdit={editingTask}
           onClose={() => setEditingTask(null)}
           onSave={handleUpdateTask}
+        />
+      )}
+
+      {isConfirmModalOpen && (
+        <ConfirmModal
+          onConfirm={() => {
+            handleClearCompleted();
+            setIsConfirmModalOpen(false);
+          }}
+          onCancel={() => setIsConfirmModalOpen(false)}
         />
       )}
     </div>
