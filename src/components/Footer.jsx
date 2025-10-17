@@ -8,7 +8,9 @@ export default function Footer({
 }) {
   return (
     <footer className='flex justify-between items-center gap-6 shadow-inner py-8 px-8 md:px-16 lg:px-8 lg:py-6'>
-      <p className='text-2xl'>{itemsLeft} items left</p>
+      <p className='text-2xl text-black dark:text-white'>
+        {itemsLeft} items left
+      </p>
 
       <div className='hidden lg:block'>
         <TaskFilters

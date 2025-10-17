@@ -28,7 +28,7 @@ The designs were created to the following widths:
 
 ### Dark Theme
 
-- Navy 950 hsl(235, 21%, 11%)
+- Navy 950: hsl(235, 21%, 11%)
 - Navy 900: hsl(235, 24%, 19%)
 - Purple 300: hsl(234, 39%, 85%)
 - Purple 100 (hover): hsl(236, 33%, 92%)

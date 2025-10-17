@@ -14,18 +14,22 @@
     --color-secondary-button: #ff0000;
     --color-secondary-border: #8d0202;
     --color-side-text: #656565;
+    --color-task-background: #ffffff;
+    --color-task-border: #000000;
   }
 
   :root[data-theme="dark"] {
-    --color-main-background: #181824;
-    --color-blur-background: #25273c;
-    --color-active-filter: #e3e4f1;
-    --color-completed-tasks: #4d5066;
-    --color-completed-tasks-border: #3a3c4e;
+    --color-main-background: #25273c;
+    --color-blur-background: #5c5f7f;
+    --color-active-filter: #e4e5f1;
+    --color-completed-tasks: #cacde8;
+    --color-completed-tasks-border: #e4e5f1;
     --color-primer-button: #15d200;
     --color-primer-border: #0d8200;
     --color-secondary-button: #ff0000;
     --color-secondary-border: #8d0202;
+    --color-task-background: #161722;
+    --color-task-border: #cacde8;
   }
 }
 
@@ -40,17 +44,33 @@ body {
   body {
     display: grid;
     place-items: center;
-    background-color: var(--color-main-background); /* Putih */
+    background-color: #ffffff; /* Warna dasar tetap putih */
     background-image: 
-    /* Garis sekunder (lebih tipis) */ linear-gradient(
-        #e5e7eb 0.5px,
-        transparent 0.5px
+    /* Garis sekunder (dibuat lebih gelap) */ linear-gradient(
+        #d1d5db 1px,
+        transparent 1px
       ),
-      linear-gradient(to right, #e5e7eb 0.5px, transparent 0.5px),
-      /* Garis utama (lebih tebal) */
-        linear-gradient(#d1d5db 1px, transparent 1px),
-      linear-gradient(to right, #d1d5db 1px, transparent 1px);
-    background-size: 20px 20px, /* Ukuran grid sekunder */ 20px 20px,
-      100px 100px, /* Ukuran grid utama */ 100px 100px;
+      /* Warna diubah & sedikit lebih tebal */
+        linear-gradient(to right, #d1d5db 1px, transparent 1px),
+      /* Garis utama (dibuat lebih gelap) */
+        linear-gradient(#9ca3af 1.5px, transparent 1.5px),
+      /* Warna diubah & lebih tebal */
+        linear-gradient(to right, #9ca3af 1.5px, transparent 1.5px);
+
+    background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
+  }
+
+  :root[data-theme="dark"] body {
+    background-color: #181824; /* Latar gelap */
+    background-image: 
+    /* Garis sekunder (dibuat lebih terang) */ linear-gradient(
+        #4b5563 1px,
+        transparent 1px
+      ),
+      linear-gradient(to right, #4b5563 1px, transparent 1px),
+      /* Garis utama (dibuat lebih terang) */
+        linear-gradient(#6b7280 1.5px, transparent 1.5px),
+      linear-gradient(to right, #6b7280 1.5px, transparent 1.5px);
+    background-size: 20px 20px, 20px 20px, 100px 100px, 100px 100px;
   }
 }

@@ -117,22 +117,26 @@ function App() {
   };
 
   return (
-    <div className='relative flex flex-col min-h-screen lg:min-h-0 lg:h-auto lg:w-full lg:max-w-3xl lg:bg-main-background lg:shadow-xl lg:rounded-lg transition-colors duration-300 ease-in-out z-30'>
+    <div className='relative flex flex-col min-h-screen max-h-screen w-full lg:min-h-[600px] lg:max-h-[60vh] lg:w-[800px] lg:bg-main-background lg:shadow-xl lg:rounded-lg transition-colors duration-300 ease-in-out z-30'>
       <Header />
-      <main className='mt-14 lg:mt-10 px-8 md:px-16 flex-grow '>
+      <main className='mt-4 lg:mt-10 px-8 md:px-16 flex flex-col flex-1 min-h-0'>
         <AddTaskForm onTaskAdd={handleAddTask} />
+
         <div className='lg:hidden'>
           <TaskFilters
             activeFilter={activeFilter}
             onFilterChange={setActiveFilter}
           />
         </div>
-        <TaskList
-          tasks={filteredTasks}
-          onDelete={handleDeleteTask}
-          onToggle={handleToggleTask}
-          onEdit={handleOpenEditModal}
-        />
+
+        <div className='flex-1 overflow-y-auto pr-1'>
+          <TaskList
+            tasks={filteredTasks}
+            onDelete={handleDeleteTask}
+            onToggle={handleToggleTask}
+            onEdit={handleOpenEditModal}
+          />
+        </div>
       </main>
       <Footer
         itemsLeft={activeTasksCount}
