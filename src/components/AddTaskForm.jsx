@@ -22,6 +22,7 @@ export default function AddTaskForm({ onTaskAdd }) {
         name='task'
         placeholder='Add your notes'
         value={title}
+        autoComplete='off'
         onChange={(e) => setTitle(e.target.value)}
         className='w-full bg-task-background text-dark dark:text-white pr-4 py-4 md:py-6 text-2xl md:text-3xl rounded-lg active:outline-none focus:outline-none placeholder:text-gray-600 dark:placeholder:text-[#E4E5F1]'
       />

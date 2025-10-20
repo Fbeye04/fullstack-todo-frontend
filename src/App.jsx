@@ -3,21 +3,32 @@ import axios from "axios";
 import Header from "./components/Header";
 import AddTaskForm from "./components/AddTaskForm";
 import TaskFilters from "./components/TaskFilters";
+import SkeletonLoader from "./components/SkeletonLoader";
 import TaskList from "./components/TaskList";
 import EditTaskModal from "./components/EditTaskModal";
 import ConfirmModal from "./components/ConfirmModal";
 import Footer from "./components/Footer";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
   const [activeFilter, setActiveFilter] = useState("all");
   const [editingTask, setEditingTask] = useState(null);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/tasks").then((response) => {
-      setTasks(response.data);
-    });
+    setIsLoading(true);
+    axios
+      .get("http://localhost:5000/tasks")
+      .then((response) => {
+        setTasks(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the tasks!", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      }, 5000);
   }, []);
 
   useEffect(() => {
@@ -130,12 +141,16 @@ function App() {
         </div>
 
         <div className='flex-1 overflow-y-auto pr-1'>
-          <TaskList
-            tasks={filteredTasks}
-            onDelete={handleDeleteTask}
-            onToggle={handleToggleTask}
-            onEdit={handleOpenEditModal}
-          />
+          {isLoading ? (
+            <SkeletonLoader />
+          ) : (
+            <TaskList
+              tasks={filteredTasks}
+              onDelete={handleDeleteTask}
+              onToggle={handleToggleTask}
+              onEdit={handleOpenEditModal}
+            />
+          )}
         </div>
       </main>
       <Footer

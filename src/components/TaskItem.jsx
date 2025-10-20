@@ -28,14 +28,14 @@ export default function TaskItem({ task, onToggle, onDelete, onEdit }) {
       <div className='flex items-center gap-4 lg:gap-6 text-2xl md:text-3xl transition-opacity duration-300 ease-in-out lg:opacity-0 group-hover:opacity-100'>
         <button
           onClick={() => onEdit(task)}
-          className={`bg-primer-button lg:bg-transparent  border-2 border-primer-border hover:border-primer-border lg:border-none rounded-lg px-3 md:px-4 py-2 md:py-3 lg:p-0 transition-all duration-300 ease-in-out hover:bg-white   lg:hover:border-transparent group active:scale-95 shadow active:shadow-sm  ${
+          className={`bg-primer-button hover:bg-white lg:hover:bg-transparent lg:bg-transparent text-white lg:text-black dark:lg:text-white hover:text-primer-button border-2 border-primer-border hover:border-primer-border lg:hover:border-transparent lg:border-none rounded-lg px-3 md:px-4 py-2 md:py-3 lg:p-0 transition-all duration-300 ease-in-out     group active:scale-95 shadow active:shadow-sm  ${
             task.isDone ? "opacity-50" : "opacity-100"
           }`}>
-          <i className='fa-solid fa-pencil text-white lg:text-black hover:text-primer-button'></i>
+          <i className='fa-solid fa-pencil '></i>
         </button>
         <button
           onClick={() => onDelete(task.id)}
-          className={`bg-secondary-button lg:bg-transparent text-white lg:text-black border-2 border-secondary-border lg:border-none rounded-lg px-3 md:px-4 py-2 md:py-3 lg:p-0 transition-all duration-300 ease-in-out hover:bg-white hover:border-secondary-border hover:text-secondary-button group active:scale-95 shadow active:shadow-sm ${
+          className={`bg-secondary-button lg:bg-transparent text-white lg:text-black dark:lg:text-white border-2 border-secondary-border lg:border-none rounded-lg px-3 md:px-4 py-2 md:py-3 lg:p-0 transition-all duration-300 ease-in-out hover:bg-white lg:hover:bg-transparent hover:border-secondary-border hover:text-secondary-button group active:scale-95 shadow active:shadow-sm ${
             task.isDone ? "opacity-50" : "opacity-100"
           }`}>
           <i className='fa-solid fa-trash'></i>
