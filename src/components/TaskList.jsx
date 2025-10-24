@@ -1,6 +1,13 @@
 import TaskItem from "./TaskItem";
 
-export default function TaskList({ tasks, onToggle, onDelete, onEdit }) {
+export default function TaskList({
+  tasks,
+  onToggle,
+  onDelete,
+  onEdit,
+  isDeleting,
+  togglingTaskId,
+}) {
   return (
     <div className='my-4 flex flex-col gap-6'>
       {tasks.map((task) => (
@@ -10,6 +17,8 @@ export default function TaskList({ tasks, onToggle, onDelete, onEdit }) {
           onToggle={onToggle}
           onDelete={onDelete}
           onEdit={onEdit}
+          isDeleting={isDeleting === task.id}
+          isToggling={togglingTaskId === task.id}
         />
       ))}
     </div>

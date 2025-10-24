@@ -1,6 +1,7 @@
 import { useState } from "react";
+import Spinner from "./UI/Spinner";
 
-export default function AddTaskForm({ onTaskAdd }) {
+export default function AddTaskForm({ onTaskAdd, isLoading }) {
   const [title, setTitle] = useState("");
 
   const handleSubmit = (e) => {
@@ -26,8 +27,14 @@ export default function AddTaskForm({ onTaskAdd }) {
         onChange={(e) => setTitle(e.target.value)}
         className='w-full bg-task-background text-dark dark:text-white pr-4 py-4 md:py-6 text-2xl md:text-3xl rounded-lg active:outline-none focus:outline-none placeholder:text-gray-600 dark:placeholder:text-[#E4E5F1]'
       />
-      <button className='bg-black dark:bg-white border-2 border-transparent rounded-lg px-2 py-1 md:px-3 md:py-2 transition-all duration-300 ease-in-out hover:bg-white dark:hover:bg-black hover:border-black dark:hover:border-white group active:scale-95 shadow active:shadow-sm'>
-        <i className='fa-solid fa-plus text-white dark:text-black active:text-black text-2xl md:text-3xl group-hover:text-black dark:group-hover:text-white '></i>
+      <button
+        disabled={isLoading}
+        className='bg-black dark:bg-white border-2 border-transparent rounded-lg px-2 py-1 md:px-3 md:py-2 transition-all duration-300 ease-in-out hover:bg-white dark:hover:bg-black hover:border-black dark:hover:border-white group active:scale-95 shadow active:shadow-sm'>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <i className='fa-solid fa-plus text-white dark:text-black active:text-black text-2xl md:text-3xl group-hover:text-black dark:group-hover:text-white '></i>
+        )}
       </button>
     </form>
   );

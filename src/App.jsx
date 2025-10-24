@@ -15,6 +15,11 @@ function App() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [editingTask, setEditingTask] = useState(null);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isAddingTask, setAddingTask] = useState(false);
+  const [deletingTaskId, setDeletingTaskId] = useState(null);
+  const [savingTaskId, setSavingTaskId] = useState(null);
+  const [togglingTaskId, setTogglingTaskId] = useState(null);
+  const [deleteAllTaskDone, setDeleteAllTaskDone] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -42,6 +47,7 @@ function App() {
   }, [editingTask]);
 
   const handleAddTask = (newTitle) => {
+    setAddingTask(true);
     axios
       .post("http://localhost:5000/tasks", {
         title: newTitle,
@@ -53,7 +59,8 @@ function App() {
       })
       .catch((error) => {
         console.error("There was an error adding the task!", error);
-      });
+      })
+      .finally(() => setAddingTask(false));
   };
 
   const activeTasksCount = tasks.filter((task) => !task.isDone).length;
@@ -71,6 +78,7 @@ function App() {
   });
 
   const handleDeleteTask = (taskId) => {
+    setDeletingTaskId(taskId);
     axios
       .delete(`http://localhost:5000/tasks/${taskId}`)
       .then(() => {
@@ -78,10 +86,14 @@ function App() {
       })
       .catch((error) => {
         console.error("There was an error deleting the task!", error);
+      })
+      .finally(() => {
+        setDeletingTaskId(null);
       });
   };
 
   const handleToggleTask = (taskId, newStatus) => {
+    setTogglingTaskId(taskId);
     axios
       .put(`http://localhost:5000/tasks/${taskId}`, { isDone: newStatus })
       .then((response) => {
@@ -91,6 +103,9 @@ function App() {
       })
       .catch((error) => {
         console.error("There was an error updating the task!", error);
+      })
+      .finally(() => {
+        setTogglingTaskId(null);
       });
   };
 
@@ -99,6 +114,7 @@ function App() {
   };
 
   const handleUpdateTask = (taskId, newTitle) => {
+    setSavingTaskId(taskId);
     axios
       .put(`http://localhost:5000/tasks/${taskId}`, { title: newTitle })
       .then((response) => {
@@ -109,17 +125,9 @@ function App() {
       })
       .catch((error) => {
         console.error("There was an error updating the task!", error);
-      });
-  };
-
-  const handleClearCompleted = () => {
-    axios
-      .delete("http://localhost:5000/tasks/completed")
-      .then(() => {
-        setTasks((prevTasks) => prevTasks.filter((task) => !task.isDone));
       })
-      .catch((error) => {
-        console.error("There was an error clearing completed tasks!", error);
+      .finally(() => {
+        setSavingTaskId(null);
       });
   };
 
@@ -127,11 +135,27 @@ function App() {
     setIsConfirmModalOpen(true);
   };
 
+  const handleClearCompleted = () => {
+    setDeleteAllTaskDone(true);
+    axios
+      .delete("http://localhost:5000/tasks/completed")
+      .then(() => {
+        setTasks((prevTasks) => prevTasks.filter((task) => !task.isDone));
+      })
+      .catch((error) => {
+        console.error("There was an error clearing completed tasks!", error);
+      })
+      .finally(() => {
+        setDeleteAllTaskDone(false);
+        setIsConfirmModalOpen(false);
+      });
+  };
+
   return (
     <div className='relative flex flex-col min-h-screen max-h-screen w-full lg:min-h-[600px] lg:max-h-[60vh] lg:w-[800px] lg:bg-main-background lg:shadow-xl lg:rounded-lg transition-colors duration-300 ease-in-out z-30'>
       <Header />
       <main className='mt-4 lg:mt-10 px-8 md:px-16 flex flex-col flex-1 min-h-0'>
-        <AddTaskForm onTaskAdd={handleAddTask} />
+        <AddTaskForm onTaskAdd={handleAddTask} isLoading={isAddingTask} />
 
         <div className='lg:hidden'>
           <TaskFilters
@@ -149,6 +173,8 @@ function App() {
               onDelete={handleDeleteTask}
               onToggle={handleToggleTask}
               onEdit={handleOpenEditModal}
+              isDeleting={deletingTaskId}
+              togglingTaskId={togglingTaskId}
             />
           )}
         </div>
@@ -165,16 +191,15 @@ function App() {
           taskToEdit={editingTask}
           onClose={() => setEditingTask(null)}
           onSave={handleUpdateTask}
+          isSaving={savingTaskId === editingTask.id}
         />
       )}
 
       {isConfirmModalOpen && (
         <ConfirmModal
-          onConfirm={() => {
-            handleClearCompleted();
-            setIsConfirmModalOpen(false);
-          }}
+          onConfirm={handleClearCompleted}
           onCancel={() => setIsConfirmModalOpen(false)}
+          isDeleting={deleteAllTaskDone}
         />
       )}
     </div>

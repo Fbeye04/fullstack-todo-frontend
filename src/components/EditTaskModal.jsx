@@ -1,6 +1,12 @@
 import { useState } from "react";
+import Spinner from "./UI/Spinner";
 
-export default function EditTaskModal({ taskToEdit, onSave, onClose }) {
+export default function EditTaskModal({
+  taskToEdit,
+  onSave,
+  onClose,
+  isSaving,
+}) {
   const [editedTitle, setEditedTitle] = useState(taskToEdit.title);
 
   const handleSave = (e) => {
@@ -28,8 +34,9 @@ export default function EditTaskModal({ taskToEdit, onSave, onClose }) {
         <div className='flex gap-4 mt-4 text-xl'>
           <button
             type='submit'
+            disabled={isSaving}
             className='bg-primer-button rounded-lg border border-primer-border text-white px-3 py-1 hover:bg-white hover:text-primer-button hover:border-primer-border transition-all duration-300 ease-in-out shadow active:scale-95 active:shadow-sm'>
-            Save
+            {isSaving ? <Spinner /> : "Save"}
           </button>
           <button
             type='button'

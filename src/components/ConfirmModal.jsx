@@ -1,4 +1,6 @@
-export default function ConfirmModal({ onConfirm, onCancel }) {
+import Spinner from "./UI/Spinner";
+
+export default function ConfirmModal({ onConfirm, onCancel, isDeleting }) {
   return (
     <div className='z-30 fixed inset-0 bg-gray-50 bg-opacity-50'>
       <div className='bg-task-background border-2 border-task-border rounded-lg min-w-[350px] md:min-w-[500px] p-6 absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2'>
@@ -13,8 +15,9 @@ export default function ConfirmModal({ onConfirm, onCancel }) {
         <div className='flex gap-4 mt-4 text-xl'>
           <button
             onClick={onConfirm}
+            disabled={isDeleting}
             className='bg-primer-button rounded-lg border border-primer-border text-white px-3 py-1 hover:bg-white hover:text-primer-button hover:border-primer-border transition-all duration-300 ease-in-out shadow active:scale-95 active:shadow-sm'>
-            Yes
+            {isDeleting ? <Spinner /> : "Yes"}
           </button>
           <button
             onClick={onCancel}
