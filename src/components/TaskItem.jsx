@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 import Spinner from "./UI/Spinner";
 
 export default function TaskItem({
@@ -9,7 +11,12 @@ export default function TaskItem({
   isToggling,
 }) {
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, x: 50 }}
+      transition={{ duration: 0.3 }}
+      layout
       className={`w-full flex justify-between gap-4  border-2  rounded-lg p-4 lg:p-6 group ${
         task.isDone
           ? "bg-completed-tasks border-completed-tasks-border border-1"
@@ -59,6 +66,6 @@ export default function TaskItem({
           {isDeleting ? <Spinner /> : <i className='fa-solid fa-trash'></i>}
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }
