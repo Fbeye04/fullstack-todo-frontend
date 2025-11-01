@@ -1,4 +1,4 @@
-import Spinner from "./UI/Spinner";
+import Spinner from "../UI/Spinner";
 
 export default function ConfirmModal({ onConfirm, onCancel, isDeleting }) {
   return (

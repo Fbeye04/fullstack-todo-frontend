@@ -1,4 +1,4 @@
-import { useTheme } from "../context/ThemeContext.jsx";
+import { useTheme } from "../../context/ThemeContext";
 
 export default function Header() {
   const { isDarkMode, toggleDarkMode } = useTheme();

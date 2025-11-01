@@ -1,4 +1,4 @@
-import TaskFilters from "./TaskFilters";
+import TaskFilters from "../features/Tasks/TaskFilters";
 
 export default function Footer({
   itemsLeft,

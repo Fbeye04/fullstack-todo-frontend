@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import Spinner from "./UI/Spinner";
+import Spinner from "../../UI/Spinner";
 
 export default function TaskItem({
   task,

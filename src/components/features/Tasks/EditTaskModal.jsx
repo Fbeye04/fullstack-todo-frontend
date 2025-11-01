@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Spinner from "./UI/Spinner";
+import Spinner from "../../UI/Spinner";
 
 export default function EditTaskModal({
   taskToEdit,
